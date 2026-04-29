@@ -49,3 +49,6 @@ fn main() {
     println!("Vector 2: {:?}", v2);
     println!("Cosine Similarity: {}", similarity);
 }
+//shitty ass algorithm
+
+//cos(theta) = (v1 . v2) / (||v1|| * ||v2||)
