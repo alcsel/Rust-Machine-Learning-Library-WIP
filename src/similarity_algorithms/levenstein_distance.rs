@@ -56,6 +56,7 @@ pub fn levenshtein(a: &str, b: &str) -> usize {
     dp[m][n]
 }
 
+/// Can use integers
 
 #[cfg(test)]
 mod tests {
@@ -75,4 +76,17 @@ mod tests {
     fn test_empty() {
         assert_eq!(levenshtein("", "abc"), 3);
     }
+}
+fn main() {
+    println!("1. kelime:");
+    let a = read_line();
+    println!("2. kelime:");
+    let b = read_line();
+    println!("Mesafe: {}", levenshtein(&a, &b));
+}
+
+fn read_line() -> String {
+    let mut s = String::new();
+    std::io::stdin().read_line(&mut s).unwrap();
+    s.trim().to_string()
 }
