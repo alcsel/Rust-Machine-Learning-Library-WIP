@@ -1,48 +1,25 @@
-use std::io;
+// File: src/similarity_algorithms/cosine_similarity.rs
 
-fn calculate_cosine_similarity() {
-    // ---------------------------------------------------------
-    // 1. VEKTÖRÜ OKUMA
-    // ---------------------------------------------------------
-    println!("Write the first vector's coordinates (x y z):");
-    let mut input1 = String::new();
-    io::stdin().read_line(&mut input1).expect("Satır okunamadı");
-    
-    let mut parts1 = input1.split_whitespace();
-    // f64 kullanarak yüksek hassasiyetli ondalıklı sayılara çeviriyoruz
-    let x: f64 = parts1.next().unwrap().parse().unwrap();
-    let y: f64 = parts1.next().unwrap().parse().unwrap();
-    let z: f64 = parts1.next().unwrap().parse().unwrap();
+pub fn cosine_similarity(v1: &[f64], v2: &[f64]) -> f64 {
+    // Return 0 if dimensions don't match or vectors are empty
+    if v1.len() != v2.len() || v1.is_empty() {
+        return 0.0; 
+    }
 
-    // ---------------------------------------------------------
-    // 2. VEKTÖRÜ OKUMA
-    // ---------------------------------------------------------
-    println!("Write the second vector's coordinates (x y z):");
-    let mut input2 = String::new();
-    io::stdin().read_line(&mut input2).expect("Satır okunamadı");
-    
-    let mut parts2 = input2.split_whitespace();
-    let x2: f64 = parts2.next().unwrap().parse().unwrap();
-    let y2: f64 = parts2.next().unwrap().parse().unwrap();
-    let z2: f64 = parts2.next().unwrap().parse().unwrap();
+    let mut dot_product = 0.0;
+    let mut norm_a = 0.0;
+    let mut norm_b = 0.0;
 
-    // ---------------------------------------------------------
-    // HESAPLAMA ADIMLARI
-    // ---------------------------------------------------------
-    // 1. Skaler Çarpım (Nokta Çarpım)
-    let dot_product = (x * x2) + (y * y2) + (z * z2);
-    
-    // 2. Uzunlukların Bulunması (Kütüphanesiz, direkt .sqrt() ile)
-    let vector1_length = (x * x + y * y + z * z).sqrt();
-    let vector2_length = (x2 * x2 + y2 * y2 + z2 * z2).sqrt();
-    
-    // 3. Sonuç (Bölme işlemi)
-    let result_score = dot_product / (vector1_length * vector2_length);
+    // Calculate dot product and squared norms in a single loop
+    for i in 0..v1.len() {
+        dot_product += v1[i] * v2[i];
+        norm_a += v1[i] * v1[i];
+        norm_b += v2[i] * v2[i];
+    }
 
-    // Ekrana yazdırma
-    println!("Cosine Similarity: {}", result_score);
-}
+    if norm_a == 0.0 || norm_b == 0.0 {
+        return 0.0; // Prevent division by zero
+    }
 
-fn main() {
-    calculate_cosine_similarity();
+    dot_product / (norm_a.sqrt() * norm_b.sqrt())
 }
