@@ -8,7 +8,7 @@ A collection of machine learning algorithms implemented in Rust, focused on clar
 | Algorithm | Status |
 |-----------|--------|
 | Levenshtein Distance | ✅ |
-| Cosine Similarity | 🔜 |
+| Cosine Similarity | ✅ |
 
 ## Usage
 
@@ -19,16 +19,26 @@ rust_machine_learning = { git = "https://github.com/alcsel/Rust-Machine-Learning
 
 ```rust
 use rust_machine_learning::similarity_algorithms::levenstein_distance::levenshtein;
+use rust_machine_learning::similarity_algorithms::cosine_similarity::cosine_similarity;
 
 fn main() {
-    println!("{}", levenshtein("kitten", "sitting")); // 3
+    // Levenshtein
+    println!("Levenshtein distance: {}", levenshtein("kitten", "sitting")); // 3
+
+    // Cosine Similarity
+    let v1 = vec![1.0, 2.0, 3.0];
+    let v2 = vec![4.0, 5.0, 6.0];
+    println!("Cosine similarity: {}", cosine_similarity(&v1, &v2));
 }
 ```
 
 ## Examples
 
+You can run the interactive examples using Cargo:
+
 ```bash
 cargo run --example levenstein
+cargo run --example cosine
 ```
 
 ## Testing
